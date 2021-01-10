@@ -9,6 +9,18 @@ package co.com.sofka.cargame.domain.juego.values;
  *
  * @author sebastian
  */
-public class Pista {
+public class Pista implements PistaValues{
+    private int kilometros;
+    private int numeroDeCarriles;
+
+    @Override
+    public int kilometros() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int numeroDeCarriles() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

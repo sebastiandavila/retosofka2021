@@ -11,15 +11,46 @@ import co.com.sofka.cargame.domain.juego.Jugador;
  *
  * @author sebastian
  */
-public class Podio {
+public class Podio implements PodioProps{
     
     private Jugador primerLugar;
     private Jugador segundoLugar;
     private Jugador tercerLugar;
     
-    Podio(Jugador primerLugar, Jugador segundoLugar, Jugador tercerLugar){
-    this.primerLugar=primerLugar;
-    this.segundoLugar=segundoLugar;
-    this.tercerLugar=tercerLugar;
+    Podio(){
+    this.primerLugar=null;
+    this.segundoLugar=null;
+    this.tercerLugar=null;
+    }
+    
+    public void asignarPrimerLugar(Jugador jugador)
+    {
+    }
+     public void asignarSegundoLugar(Jugador jugador)
+    {
+    }
+      public void asignarTercerLugar(Jugador jugador)
+    {
+    }
+
+    @Override
+    public Jugador primerLugar() {
+        return this.primerLugar;
+    }
+
+    @Override
+    public Jugador segundoLugar() {
+       return this.segundoLugar;
+    }
+
+    @Override
+    public Jugador tercerLugar() {
+        return this.tercerLugar;
+    }
+    
+    @Override
+    public Boolean estaLleno()
+    {
+    return true;
     }
 }
