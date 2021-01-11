@@ -19,17 +19,24 @@ public class Carril {
     private int metros;
     private Boolean desplazamientoFinal;
 
-    public Carril(Carro carro, Posicion posicion, int metros, Boolean desplazamientoFinal) {
-        this.carro = carro;
+    public Carril(Posicion posicion, int metros, Boolean desplazamientoFinal) {
+        this.carro = null;
         this.posicion = posicion;
         this.metros = metros;
         this.desplazamientoFinal = desplazamientoFinal;
     }
 
     public void agregarCarro(Carro carro) {
+        this.carro=carro;
     }
 
     public void moverCarro(int movimiento) {
+        carro.avanzarEnCarril(movimiento);
+        if(carro.distancia()>=this.metros)
+        {
+            carro.setDistancia(this.metros);
+        this.desplazamientoFinal=true;
+        }
     }
 
     public int metros() {

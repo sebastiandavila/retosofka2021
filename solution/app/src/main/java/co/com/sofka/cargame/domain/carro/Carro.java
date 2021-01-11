@@ -24,11 +24,18 @@ public class Carro {
         this.conductor = conductor;
     }
 
-    public void avanzarEnCarril() {
+    public void avanzarEnCarril(int movimiento) {
+        
+        this.distancia+=movimiento;
+        
     }
 
     public Conductor conductor() {
         return this.conductor;
+    }
+
+    public void setDistancia(int distancia) {
+        this.distancia = distancia;
     }
 
     public int distancia() {

@@ -27,8 +27,8 @@ public class Juego {
     public Juego(Pista pista) {
         this.jugadores = new HashMap<Integer, Jugador>();
         this.pista = pista;
-        this.jugando = true;
-        this.podio = null;
+        this.jugando = false;
+        this.podio = new Podio();
     }
 
     public void crearJugador(int jugadorId, String nombre, String color) {
@@ -36,18 +36,26 @@ public class Juego {
         jugadores.put(jugadorId, jugador);
     }
 
-    public void asignarPrimerLugar(int jugadorId) {
+    public void asignarPrimerLugar(Jugador jugador) {
+        podio.asignarPrimerLugar(jugador);
     }
 
-    public void asignarSegundoLugar(int jugadorId) {
+    public void asignarSegundoLugar(Jugador jugador) {
+        podio.asignarSegundoLugar(jugador);
     }
 
-    public void asignarTercerLugar(int jugadorId) {
+    public void asignarTercerLugar(Jugador jugador) {
+        podio.asignarTercerLugar(jugador);
     }
 
     public void iniciarJuego() {
+        this.jugando=true;
     }
 
+    public void setJugando(Boolean jugando) {
+        this.jugando = jugando;
+    }
+    
     public Map<Integer, Jugador> jugadores() {
         return this.jugadores;
     }

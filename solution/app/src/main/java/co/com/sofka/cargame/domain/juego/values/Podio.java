@@ -17,19 +17,22 @@ public class Podio implements PodioProps {
     private Jugador segundoLugar;
     private Jugador tercerLugar;
 
-    Podio() {
+    public Podio() {
         this.primerLugar = null;
         this.segundoLugar = null;
         this.tercerLugar = null;
     }
 
     public void asignarPrimerLugar(Jugador jugador) {
+        this.primerLugar = jugador;
     }
 
     public void asignarSegundoLugar(Jugador jugador) {
+        this.segundoLugar = jugador;
     }
 
     public void asignarTercerLugar(Jugador jugador) {
+        this.tercerLugar = jugador;
     }
 
     @Override
@@ -49,6 +52,12 @@ public class Podio implements PodioProps {
 
     @Override
     public Boolean estaLleno() {
-        return true;
+        if(this.primerLugar != null &&
+        this.segundoLugar != null &&
+        this.tercerLugar != null)
+        {return true;}
+        else
+        {return false;}
+        
     }
 }
