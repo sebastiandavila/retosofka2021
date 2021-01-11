@@ -10,6 +10,7 @@ package co.com.sofka.cargame.domain.juego;
  * @author sebastian
  */
 public class Jugador {
+
     private String nombre;
     private String color;
     private int puntos;
@@ -24,11 +25,9 @@ public class Jugador {
         return nombre;
     }
 
-
     public String getColor() {
         return color;
     }
-
 
     public int getPuntos() {
         return puntos;
@@ -37,7 +36,5 @@ public class Jugador {
     public void setPuntos(int puntos) {
         this.puntos = puntos;
     }
-    
-    
-    
+
 }

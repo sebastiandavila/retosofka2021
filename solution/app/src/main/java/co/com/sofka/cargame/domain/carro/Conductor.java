@@ -10,13 +10,18 @@ package co.com.sofka.cargame.domain.carro;
  * @author sebastian
  */
 public class Conductor {
+
     private String nombre;
-    
-    
-    public String nombre()
-    {
-    return this.nombre;}
-    
-    public int lanzarDado()
-    {return 1;}
+
+    public Conductor(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String nombre() {
+        return this.nombre;
+    }
+
+    public int lanzarDado() {
+        return 1;
+    }
 }

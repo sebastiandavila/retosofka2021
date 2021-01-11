@@ -10,6 +10,8 @@ package co.com.sofka.cargame.domain.juego.values;
  * @author sebastian
  */
 public interface PistaValues {
+
     int kilometros();
+
     int numeroDeCarriles();
 }

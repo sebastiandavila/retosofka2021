@@ -10,27 +10,33 @@ package co.com.sofka.cargame.domain.carro;
  * @author sebastian
  */
 public class Carro {
+
     private Conductor conductor;
     private int distancia;
     private String color;
-    
-    
-    Carro()
-    {}
-    
-    public void asignarConductor()
-    {}
-    
-    public void avanzarEnCarril()
-    {}
-    
-    public Conductor conductor()
-    {return this.conductor;}
-    
-    public int distancia()
-    {return this.distancia;}
-    
-    public String color()
-    {return this.color;}
-    
+
+    public Carro(String color) {
+        this.distancia = 0;
+        this.color = color;
+    }
+
+    public void asignarConductor(Conductor conductor) {
+        this.conductor = conductor;
+    }
+
+    public void avanzarEnCarril() {
+    }
+
+    public Conductor conductor() {
+        return this.conductor;
+    }
+
+    public int distancia() {
+        return this.distancia;
+    }
+
+    public String color() {
+        return this.color;
+    }
+
 }

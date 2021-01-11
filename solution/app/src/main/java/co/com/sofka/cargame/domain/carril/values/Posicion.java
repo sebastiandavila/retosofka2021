@@ -9,18 +9,32 @@ package co.com.sofka.cargame.domain.carril.values;
  *
  * @author sebastian
  */
-public class Posicion implements PosicionProps{
+public class Posicion implements PosicionProps {
+
     private int actual;
     private int meta;
 
+    public Posicion() {
+        this.actual = 0;
+        this.meta = 0;
+    }
+
+    public void setActual(int actual) {
+        this.actual = actual;
+    }
+
+    public void setMeta(int meta) {
+        this.meta = meta;
+    }
+
     @Override
     public int actual() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.actual;
     }
 
     @Override
     public int meta() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.meta;
     }
-    
+
 }

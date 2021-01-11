@@ -12,8 +12,12 @@ import co.com.sofka.cargame.domain.juego.Jugador;
  * @author sebastian
  */
 public interface PodioProps {
+
     Jugador primerLugar();
+
     Jugador segundoLugar();
+
     Jugador tercerLugar();
+
     Boolean estaLleno();
 }

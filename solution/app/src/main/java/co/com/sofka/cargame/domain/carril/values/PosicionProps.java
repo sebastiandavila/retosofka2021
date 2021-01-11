@@ -10,6 +10,8 @@ package co.com.sofka.cargame.domain.carril.values;
  * @author sebastian
  */
 public interface PosicionProps {
+
     int actual();
+
     int meta();
 }
