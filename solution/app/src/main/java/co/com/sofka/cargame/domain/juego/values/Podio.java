@@ -52,12 +52,13 @@ public class Podio implements PodioProps {
 
     @Override
     public Boolean estaLleno() {
-        if(this.primerLugar != null &&
-        this.segundoLugar != null &&
-        this.tercerLugar != null)
-        {return true;}
-        else
-        {return false;}
-        
+        if (this.primerLugar != null
+                && this.segundoLugar != null
+                && this.tercerLugar != null) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }

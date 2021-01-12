@@ -23,14 +23,14 @@ import static jdk.nashorn.internal.objects.NativeArray.map;
  * @author sebastian
  */
 public class Juego {
-
+    
     private Map<Integer, Jugador> jugadores;
     private String identificador;
     private Pista pista;
     private Boolean jugando;
     private Podio podio;
     BaseDatos consultas;
-
+    
     public Juego(String identificador, Pista pista) {
         this.identificador = identificador;
         this.jugadores = new HashMap<Integer, Jugador>();
@@ -39,21 +39,21 @@ public class Juego {
         this.podio = new Podio();
         this.consultas = new BaseDatos();
     }
-
+    
     public String getIdentificador() {
         return identificador;
     }
-
+    
     public void crearJugador(int jugadorId, String nombre, String color) {
         Jugador jugador = new Jugador(nombre, color, 0);
         jugadores.put(jugadorId, jugador);
         consultas.Conectar();
-
+        
         Boolean existe = false;
         ResultSet rs;
         String strsql = "SELECT * FROM jugador;";
         rs = consultas.consulta(strsql);
-
+        
         try {
             while (rs.next()) {
                 if (nombre.equals(rs.getString("nombre"))) {
@@ -67,49 +67,50 @@ public class Juego {
         } catch (SQLException ex) {
             Logger.getLogger(Juego.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
     }
-
+    
     public void asignarPrimerLugar(Jugador jugador) {
+        jugador.setPuntos(jugador.getPuntos() + 1);
         podio.asignarPrimerLugar(jugador);
         consultas.Conectar();
         String nombre = jugador.getNombre();
         String updatePuntos = "UPDATE `jugador` SET `puntos`=`puntos`+1 WHERE `nombre`='" + nombre + "'";
         consultas.insertar(updatePuntos);
-
+        
     }
-
+    
     public void asignarSegundoLugar(Jugador jugador) {
         podio.asignarSegundoLugar(jugador);
     }
-
+    
     public void asignarTercerLugar(Jugador jugador) {
         podio.asignarTercerLugar(jugador);
-
+        
         consultas.Conectar();
         consultas.insertar("INSERT INTO `podio` (`IdentificadorCarrera`, `PrimerLugar`, `SegundoLugar`, `TercerLugar`) VALUES ('" + this.identificador + "', '" + podio.primerLugar().getNombre() + "', '" + podio.segundoLugar().getNombre() + "', '" + podio.tercerLugar().getNombre() + "');");
     }
-
+    
     public void iniciarJuego() {
         this.jugando = true;
     }
-
+    
     public void setJugando(Boolean jugando) {
         this.jugando = jugando;
     }
-
+    
     public Map<Integer, Jugador> jugadores() {
         return this.jugadores;
     }
-
+    
     public PistaValues pista() {
         return this.pista;
     }
-
+    
     public Boolean jugando() {
         return this.jugando;
     }
-
+    
     public PodioProps podio() {
         return this.podio;
     }

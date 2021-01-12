@@ -27,15 +27,14 @@ public class Carril {
     }
 
     public void agregarCarro(Carro carro) {
-        this.carro=carro;
+        this.carro = carro;
     }
 
     public void moverCarro(int movimiento) {
         carro.avanzarEnCarril(movimiento);
-        if(carro.distancia()>=this.metros)
-        {
+        if (carro.distancia() >= this.metros) {
             carro.setDistancia(this.metros);
-        this.desplazamientoFinal=true;
+            this.desplazamientoFinal = true;
         }
     }
 

@@ -25,9 +25,9 @@ public class Carro {
     }
 
     public void avanzarEnCarril(int movimiento) {
-        
-        this.distancia+=movimiento;
-        
+
+        this.distancia += movimiento;
+
     }
 
     public Conductor conductor() {

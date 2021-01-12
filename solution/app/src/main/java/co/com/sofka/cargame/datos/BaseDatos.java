@@ -48,7 +48,7 @@ public class BaseDatos {
 
     }
 
-    public ResultSet consulta(String strsql) {  /////
+    public ResultSet consulta(String strsql) { 
         int cantRegs = 0;
         ResultSet rs = null;
         ResultSet rs1 = null;

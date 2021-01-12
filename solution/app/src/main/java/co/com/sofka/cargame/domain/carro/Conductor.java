@@ -22,7 +22,7 @@ public class Conductor {
     }
 
     public int lanzarDado() {
-        int dado = (int) (Math.random()*6 + 1);
+        int dado = (int) (Math.random() * 6 + 1);
         return dado;
     }
 }

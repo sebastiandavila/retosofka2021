@@ -34,9 +34,11 @@ public class App {
     static Map<String, Conductor> PodioAux;
 
     public static void main(String[] args) {
+
+        //El archivo sql para el funcionamiento del proyecto se encuentra en el repositorio y tiene por nombre retosofkacargame.sql
         BaseDatos consultas = new BaseDatos();
         consultas.Conectar();
-
+//consulta del historial de victorias de los jugadores
         ResultSet rs;
         String strsql = "SELECT * FROM jugador ORDER BY puntos DESC;";
 
@@ -69,6 +71,7 @@ public class App {
         }
 
     }
+//Se pide la informacion necesaria para crear el juego y los objetos requeridos
 
     static void Empezar() {
         String identificador = JOptionPane.showInputDialog("Ingrese el nombre de la carrera que servira como identificador");
@@ -96,6 +99,7 @@ public class App {
         }
         juego.iniciarJuego();
     }
+//se lleva a cabo el progreso del juego, re realiza el lanzamiento del dado para avanzar hasta llegar a la meta
 
     static void ProgresoJuego() {
         Boolean terminar = false;
