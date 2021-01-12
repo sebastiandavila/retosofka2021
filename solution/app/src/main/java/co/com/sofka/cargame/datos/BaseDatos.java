@@ -7,8 +7,11 @@ package co.com.sofka.cargame.datos;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -21,7 +24,7 @@ public class BaseDatos {
     public Connection Conectar() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            String conexion = "jdbc:mysql://localhost:3306/reto_cargame_sofka";
+            String conexion = "jdbc:mysql://localhost:3306/retosofkacargame";
             conectar = (Connection) DriverManager.getConnection(conexion, "root", "");
         } catch (ClassNotFoundException ex) {
             System.out.println("Error: No se encontró el DRIVER de conexión" + ex.toString());
@@ -39,10 +42,27 @@ public class BaseDatos {
         try {
             st = conectar.createStatement();
             cantRegs = st.executeUpdate(strsql);
-//cantRegs = st.executeUpdate("INSERT INTO `podio` (`CodigoCarrera`, `PrimerLugar`, `SegundoLugar`, `TercerLugar`) VALUES (NULL, 'Sebas', 'Davila', 'Ju')");
         } catch (SQLException ex) {
             System.out.println("Error en la consulta: " + ex.toString());
         }
+
+    }
+
+    public ResultSet consulta(String strsql) {  /////
+        int cantRegs = 0;
+        ResultSet rs = null;
+        ResultSet rs1 = null;
+        Statement st = null;
+
+        try {
+            st = conectar.createStatement();
+            rs = st.executeQuery(strsql);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error con la conexión a la Base de Datos" + ex.toString());
+        }
+        return rs;
 
     }
 }

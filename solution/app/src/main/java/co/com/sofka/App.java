@@ -8,12 +8,16 @@ import co.com.sofka.cargame.domain.carro.Conductor;
 import co.com.sofka.cargame.domain.juego.Juego;
 import co.com.sofka.cargame.domain.juego.Jugador;
 import co.com.sofka.cargame.domain.juego.values.Pista;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -30,13 +34,26 @@ public class App {
     static Map<String, Conductor> PodioAux;
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
-        /*BaseDatos consultas = new BaseDatos();
+        BaseDatos consultas = new BaseDatos();
         consultas.Conectar();
-        consultas.insertar("dd");*/
+
+        ResultSet rs;
+        String strsql = "SELECT * FROM jugador ORDER BY puntos DESC;";
+
         int i = 0;
         while (i != 100) {
-            i = Integer.parseInt(JOptionPane.showInputDialog("Opciones \n "
+            String Historial = "";
+            rs = consultas.consulta(strsql);
+
+            try {
+                while (rs.next()) {
+                    Historial += rs.getString("nombre") + ": " + rs.getString("puntos") + "\n";
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(Juego.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            i = Integer.parseInt(JOptionPane.showInputDialog("Historial de victorias \n" + Historial + "\n Opciones \n "
                     + "1.empezar juego \n "
                     + "100.salir"));
             switch (i) {
@@ -45,6 +62,7 @@ public class App {
                     Empezar();
                     JOptionPane.showMessageDialog(null, "El juego comenzara con el lanzamiento de dados del jugador numero 1");
                     ProgresoJuego();
+                    mostrarResultados();
                     break;
             }
 
@@ -53,10 +71,11 @@ public class App {
     }
 
     static void Empezar() {
-        int numeroDeCarriles = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de jugadores"));
+        String identificador = JOptionPane.showInputDialog("Ingrese el nombre de la carrera que servira como identificador");
+        int numeroDeCarriles = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de jugadores (3 jugadores como minimo)"));
         int kilometros = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de kilometros que tendrá la carrera"));
         pista = new Pista(kilometros, numeroDeCarriles);
-        juego = new Juego(pista);
+        juego = new Juego(identificador, pista);
         carriles = new ArrayList();
         carros = new ArrayList();
         conductores = new ArrayList();
@@ -98,7 +117,7 @@ public class App {
                     carriles.get(x - 1).moverCarro(dado * 100);
                     for (int y = 1; y <= carriles.size(); y++) {
 
-                        mostrar = mostrar + carriles.get(y - 1).carro().conductor().nombre() + " ha avanzado en total: " + carriles.get(y - 1).carro().distancia() + "\n";
+                        mostrar = mostrar + carriles.get(y - 1).carro().conductor().nombre() + " ha avanzado en total: " + carriles.get(y - 1).carro().distancia() + " metros \n";
                     }
 
                     JOptionPane.showMessageDialog(null, mostrar);
@@ -131,13 +150,20 @@ public class App {
                 }
             }
 
-            System.out.println("Clave: " + key + " -> Valor: " + PodioAux.get(key).nombre());
-
         }
-        System.out.println("--------------------------");
-        System.out.println(juego.podio().primerLugar().getNombre());
-        System.out.println(juego.podio().segundoLugar().getNombre());
-        System.out.println(juego.podio().tercerLugar().getNombre());
 
+    }
+
+    static void mostrarResultados() {
+        String resultados = "Resultados de la carrera " + juego.getIdentificador() + ": \n";
+        int puesto = 1;
+        Iterator it = PodioAux.keySet().iterator();
+        while (it.hasNext()) {
+            String key = (String) it.next();
+            resultados += puesto + ". " + PodioAux.get(key).nombre() + "\n";
+            puesto++;
+        }
+
+        JOptionPane.showMessageDialog(null, resultados);
     }
 }

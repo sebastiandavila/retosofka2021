@@ -5,12 +5,17 @@
  */
 package co.com.sofka.cargame.domain.juego;
 
+import co.com.sofka.cargame.datos.BaseDatos;
 import co.com.sofka.cargame.domain.juego.values.Pista;
 import co.com.sofka.cargame.domain.juego.values.PistaValues;
 import co.com.sofka.cargame.domain.juego.values.Podio;
 import co.com.sofka.cargame.domain.juego.values.PodioProps;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static jdk.nashorn.internal.objects.NativeArray.map;
 
 /**
@@ -20,24 +25,58 @@ import static jdk.nashorn.internal.objects.NativeArray.map;
 public class Juego {
 
     private Map<Integer, Jugador> jugadores;
-    Pista pista;
-    Boolean jugando;
-    Podio podio;
+    private String identificador;
+    private Pista pista;
+    private Boolean jugando;
+    private Podio podio;
+    BaseDatos consultas;
 
-    public Juego(Pista pista) {
+    public Juego(String identificador, Pista pista) {
+        this.identificador = identificador;
         this.jugadores = new HashMap<Integer, Jugador>();
         this.pista = pista;
         this.jugando = false;
         this.podio = new Podio();
+        this.consultas = new BaseDatos();
+    }
+
+    public String getIdentificador() {
+        return identificador;
     }
 
     public void crearJugador(int jugadorId, String nombre, String color) {
         Jugador jugador = new Jugador(nombre, color, 0);
         jugadores.put(jugadorId, jugador);
+        consultas.Conectar();
+
+        Boolean existe = false;
+        ResultSet rs;
+        String strsql = "SELECT * FROM jugador;";
+        rs = consultas.consulta(strsql);
+
+        try {
+            while (rs.next()) {
+                if (nombre.equals(rs.getString("nombre"))) {
+                    existe = true;
+                }
+            }
+            if (!existe) {
+                strsql = "INSERT INTO `jugador` (`Id`, `nombre`, `puntos`) VALUES (NULL, '" + nombre + "', '0');";
+                consultas.insertar(strsql);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Juego.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     public void asignarPrimerLugar(Jugador jugador) {
         podio.asignarPrimerLugar(jugador);
+        consultas.Conectar();
+        String nombre = jugador.getNombre();
+        String updatePuntos = "UPDATE `jugador` SET `puntos`=`puntos`+1 WHERE `nombre`='" + nombre + "'";
+        consultas.insertar(updatePuntos);
+
     }
 
     public void asignarSegundoLugar(Jugador jugador) {
@@ -46,16 +85,19 @@ public class Juego {
 
     public void asignarTercerLugar(Jugador jugador) {
         podio.asignarTercerLugar(jugador);
+
+        consultas.Conectar();
+        consultas.insertar("INSERT INTO `podio` (`IdentificadorCarrera`, `PrimerLugar`, `SegundoLugar`, `TercerLugar`) VALUES ('" + this.identificador + "', '" + podio.primerLugar().getNombre() + "', '" + podio.segundoLugar().getNombre() + "', '" + podio.tercerLugar().getNombre() + "');");
     }
 
     public void iniciarJuego() {
-        this.jugando=true;
+        this.jugando = true;
     }
 
     public void setJugando(Boolean jugando) {
         this.jugando = jugando;
     }
-    
+
     public Map<Integer, Jugador> jugadores() {
         return this.jugadores;
     }
